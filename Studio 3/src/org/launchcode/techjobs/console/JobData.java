@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by LaunchCode
@@ -26,7 +27,7 @@ public class JobData {
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
-     * @return List of all of the values of the given field
+     * @return List of all the values of the given field
      */
     public static ArrayList<String> findAll(String field) {
 
@@ -123,6 +124,26 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm){
+        loadData();
+
+        ArrayList<HashMap<String, String>> searchResults = new ArrayList<>();
+
+        for (HashMap<String, String> job : allJobs) {
+            for (String value : job.values()) {
+                if (value.toLowerCase().contains(searchTerm.toLowerCase())) {
+                    searchResults.add(job);
+                    break;
+                }
+            }
+//            if (job.values().contains(searchTerm)) {
+//                searchResults.add(job);
+//            }
+        }
+
+        return searchResults;
     }
 
 }
